@@ -1,0 +1,6 @@
+.Rproj.user
+.Rhistory
+.RData
+vignettes/setup_sm.Rmd
+data-raw/
+inst/doc

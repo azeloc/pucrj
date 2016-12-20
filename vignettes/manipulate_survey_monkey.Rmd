@@ -1,0 +1,64 @@
+---
+title: "Entra no survey monkey"
+author: "Fernando Corrêa"
+date: "20 de dezembro de 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r setup_sm}
+
+n_processo <- unique(c(vara_1$n_processo, vara_2$n_processo))
+
+N <- 2*length(n_processo)
+
+build_params_list <- function(ids, values){
+  l <- vector("list", length(ids))
+  
+  for(ii in 1:length(ids)){
+    l[[ii]]$id <- ids[ii]
+    l[[ii]]$data <- values[[ii]]
+  }
+  return(l)
+}
+
+```
+
+```{r clean_ids}
+
+colectors_ids <- with(list_colectors()$data, id)
+
+remove_colectors(colectors_ids)
+
+```
+
+```{r create_col}
+
+create_colector(list("type" = "weblink", "edit_response_type" = "always"))
+
+#create_colectors(N, list(type = "weblink", edit_response_type = "always"))
+
+```
+
+```{r alter_id}
+
+final <- sort(rep(c("","_2"), length(n_processo)))
+
+colectors_ids <- with(list_colectors()$data, id)
+
+url <- paste0("https://pt.surveymonkey.com/r/",rep(n_processo, 2),final)
+
+valores <- vector("list", length(url))
+
+for(ii in seq_along(url)){
+  valores[[ii]] <- list("url" = url[[ii]])
+}
+
+body_list <- build_params_list(colectors_ids[1:10], valores[1:10])
+
+alter_collectors(body_list)
+
+```

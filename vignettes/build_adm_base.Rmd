@@ -1,0 +1,36 @@
+---
+title: "Monta base de controle"
+author: "Fernando Corrêa"
+date: "19 de dezembro de 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(pucrjadm)
+
+```
+
+Essa vignette lê as planilhas brutas do data-raw e transforma-as numa versão menos bagunçada.
+
+```{r}
+
+vara_1 <- "/home/fcorrea/Área de Trabalho/Projects/pucrjadm/data-raw/Processos digitais - Recuperação Judicial - 1ª Vara.xlsx" %>% 
+  clean_planilha_controle()
+
+```
+
+```{r}
+
+vara_2 <- "/home/fcorrea/Área de Trabalho/Projects/pucrjadm/data-raw/Processos digitais - Recuperação Judicial - 2ª Vara.xlsx" %>% 
+  clean_planilha_controle()
+
+```
+
+```{r, eval = FALSE}
+
+devtools::use_data(vara_1)
+devtools::use_data(vara_2)
+
+```
